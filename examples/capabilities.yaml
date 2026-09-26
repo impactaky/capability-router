@@ -1,0 +1,78 @@
+# Fictional example capability definition, used by docs/tutorial.md and the examples/ catalog.
+# The items, levels, anchors and thresholds are made up; they are not any published evaluation.
+version: 3
+levels: [none, low, mid, high]
+
+items:
+  coding:
+    measures: >-
+      Implementing a given specification or algorithm as correct code.
+    excludes: >-
+      The finish of a written deliverable (writing).
+    levels:
+      none: No code is written.
+      low: A few obvious lines of change.
+      mid: A function or module implemented to specification and checked with tests.
+      high: Numerical or complex algorithms implemented down to the specification details.
+    examples:
+      low:
+        - Fix an off-by-one error in an existing loop.
+        - Add a missing default value to a function argument.
+        - Handle an empty input list without raising.
+        - Rename a symbol consistently across one file.
+      mid:
+        - Implement a JSON config loader with validation and tests.
+        - Add a paginated API client method with retry handling.
+        - Cache a computed result keyed on the input arguments.
+        - Parse a small CSV file into typed records with error reporting.
+      high:
+        - Implement a numerically stable matrix decomposition from its specification.
+        - Implement a parser for a small grammar with error recovery.
+        - Implement a diff algorithm with correct hunk boundaries.
+        - Implement a concurrent worker pool with backpressure.
+    thresholds: {low: 0.3, mid: 0.5, high: 0.7}
+
+  long_context:
+    measures: >-
+      Connecting distant parts of a large body of supplied material.
+    excludes: >-
+      Writing new code (coding), and the finish of a written deliverable (writing).
+    levels:
+      none: Only a short instruction is supplied.
+      low: A few files or pages are read.
+      mid: Dozens of files or pages are connected.
+      high: An entire repository or a very long document must be integrated to answer.
+    examples:
+      low:
+        - Follow a function across the two files that define and call it.
+      mid:
+        - Trace a value through a dozen files to explain where it changes.
+      high:
+        - Answer a question that needs distant parts of the whole repository.
+    thresholds: {low: 0.3, mid: 0.5, high: 0.7}
+
+  writing:
+    measures: >-
+      The finished quality of a written deliverable: a report, analysis or proposal.
+    excludes: >-
+      Code (coding), and reading a large body of material (long_context).
+    levels:
+      none: The deliverable is not written prose.
+      low: A short summary or note.
+      mid: A reader-facing document with structure and accuracy.
+      high: A proposal or report whose finish is itself evaluated.
+    examples:
+      low:
+        - A one-paragraph change note.
+      mid:
+        - A design note for a change, with trade-offs and a recommendation.
+      high:
+        - A proposal for a decision maker, with evidence and a clear ask.
+    thresholds: {low: 0.25, mid: 0.45, high: 0.65}
+
+routing:
+  level_weight: {none: 0, low: 1, mid: 2, high: 3}
+  cost_band: 1.25
+  score_margin: 0.05
+  time_cost_band: 2.5
+  time_ratio: 0.5

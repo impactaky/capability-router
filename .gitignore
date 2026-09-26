@@ -1,0 +1,8 @@
+/examples/criteria.md
+.venv/
+__pycache__/
+*.pyc
+dist/
+.pytest_cache/
+/models/
+/pool.yaml

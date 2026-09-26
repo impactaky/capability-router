@@ -1,0 +1,6 @@
+# Fictional pool for examples/models. These configs are not real models.
+configs:
+  example-small: {services: [codex]}
+  example-mid: {services: [cursor]}
+  example-large: {services: [claude, commandcode]}
+  example-spare: {services: [commandcode], enabled: false}

@@ -1,0 +1,59 @@
+# capability-router capability definition template.
+#
+# Copy this file to ${XDG_CONFIG_HOME:-~/.config}/capability-router/capabilities.yaml, or point
+# CAPABILITY_ROUTER_CAPABILITIES at it, then replace the placeholder item with your own.
+#
+# A "level" is defined by the anchor problems ("examples") a task of that level can solve. The
+# level text is a short summary of those anchors. A task's demand is judged by how close it is to
+# the level's anchors; a config satisfies a level when it passes a large enough share of them.
+# When a level has no `examples`, the level is decided from the text alone and any threshold is a
+# placeholder. See docs/tutorial.md to build anchors from scratch.
+
+version: 3
+
+# The level ladder, low to high. Fixed; write it or leave it out.
+levels: [none, low, mid, high]
+
+# One entry per capability item. The names and the number of items are yours.
+items:
+  my_item:
+    # REQUIRED. What the item measures. Also the Jev question when `question` is omitted.
+    measures: >-
+      What this item measures, in one sentence.
+    # REQUIRED. What the item deliberately does not measure.
+    excludes: >-
+      What this item does not measure. Point at the other item that covers it.
+    # REQUIRED. A short description of each level; every level must be present.
+    levels:
+      none: >-
+        No demand for this capability.
+      low: >-
+        The demand of the low anchor problems.
+      mid: >-
+        The demand of the mid anchor problems.
+      high: >-
+        The demand of the high anchor problems.
+    # OPTIONAL. Anchor problems per level, as short summaries. Keys are low/mid/high only.
+    examples:
+      low:
+        - A short summary of one low anchor problem.
+      mid:
+        - A short summary of one mid anchor problem.
+      high:
+        - A short summary of one high anchor problem.
+    # OPTIONAL. The Jev question for this item. Defaults to a sentence built from `measures`.
+    question: >-
+      How much does this task require <the capability>? Choose the lowest level that is
+      sufficient.
+    # OPTIONAL but required when any catalog config writes `score` for this item. A catalog
+    # `level` is mapped onto these values (H -> high, M -> mid, L -> low, - -> 0); without them
+    # the fixed midpoints 1.0 / 2/3 / 1/3 / 0 are used. 0 <= low <= mid <= high <= 1.
+    thresholds: {low: 0.3, mid: 0.5, high: 0.7}
+
+# OPTIONAL. Routing parameters. Omit the whole block to use these defaults.
+routing:
+  level_weight: {none: 0, low: 1, mid: 2, high: 3}
+  cost_band: 1.25
+  score_margin: 0.05
+  time_cost_band: 2.5
+  time_ratio: 0.5

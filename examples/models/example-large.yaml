@@ -1,0 +1,11 @@
+# Fictional example config. The values are made up for the examples/ setup and the tutorial.
+id: example-large
+model: Example Large
+effort: high
+snapshot: '2026-09-26'
+context_window_tokens: 128000
+vision: true
+items:
+  coding: {level: H, cost_per_task: 1.0, time_per_task_s: 30}
+  long_context: {score: 0.8, cost_per_task: 1.0, time_per_task_s: 30}
+  writing: {score: 0.7, cost_per_task: 0.6, time_per_task_s: 20}

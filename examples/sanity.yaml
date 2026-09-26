@@ -1,0 +1,19 @@
+# Fictional sanity cases for the examples/ definition. Each case is an id, a short label and the
+# levels it asks for; there is no task text and no expected config. Items left out are `none`.
+# `capability-router sanity` routes them against the current pool.
+tasks:
+  - id: code-1
+    label: small code change
+    levels: {coding: low}
+  - id: code-2
+    label: implement an algorithm
+    levels: {coding: high}
+  - id: repo-1
+    label: change across a large repository
+    levels: {coding: mid, long_context: high}
+  - id: doc-1
+    label: write a proposal
+    levels: {writing: high}
+  - id: mixed-1
+    label: design note for a broad change
+    levels: {coding: mid, long_context: mid, writing: mid}
