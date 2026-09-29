@@ -46,7 +46,7 @@ from .config import (
 )
 from .jev import FixedLevels, FixtureJev, JevClient, parse_levels
 from .normalize import item_cost_per_task, item_scores, item_time_per_task
-from .scoring import MODES, TaskMeta, estimate_tokens, route
+from .scoring import MODES, TaskMeta, estimate_tokens, route, task_cost
 
 # Free-text columns may wrap, but never below this many display columns: a narrow terminal must
 # not stack one character per line, and a table that then does not fit may grow past the width.
@@ -273,12 +273,28 @@ def _print_summary(caps, models, services: dict[str, tuple[str, ...]], items: li
     A `level` item shows its catalog letter directly. A `score` item shows the highest level whose
     threshold the score clears (the same comparison the router's filter uses): `H`, `M`, `L` or
     `-` below low. `?` is a config that has no value for the item.
+
+    The trailing `cost` and `time` columns are the same all-`none` totals `route` prices with:
+    `task_cost` over every item, and `?` when the config misses an item, so a partial sum is never
+    shown. `--costs` prints the per-item values these sum.
     """
     short = [_abbrev(i) for i in items]
-    rows = [[m.id] + [_grade(caps, m, item) for item in items] for m in models]
-    _print_table(["config", *short], rows, right=range(1, len(short) + 1))
+    rows = []
+    for m in models:
+        cost, _breakdown, time_s = task_cost(caps, m, {})
+        rows.append(
+            [m.id]
+            + [_grade(caps, m, item) for item in items]
+            + [_fmt_missing(cost, 4), _fmt_missing(time_s, 1)]
+        )
+    header = ["config", *short, "cost", "time"]
+    _print_table(header, rows, right=range(1, len(header)))
     _print_text(_items_legend(short, items))
     _print_text("H/M/L = clears the high/mid/low level, - = below low, ? = no value")
+    _print_text(
+        "cost/time = sum over every item (the basis of an all-none request);"
+        " per-item values: models --costs"
+    )
     _print_pool(services)
     return 0
 
@@ -600,6 +616,11 @@ def _abbrev(item: str) -> str:
 
 def _fmt(v, nd: int) -> str:
     return "-" if v is None else f"{v:.{nd}f}"
+
+
+def _fmt_missing(v, nd: int) -> str:
+    """Like `_fmt`, but a missing value is `?`, matching the item columns' symbol."""
+    return "?" if v is None else f"{v:.{nd}f}"
 
 
 def _is_terminal() -> bool:

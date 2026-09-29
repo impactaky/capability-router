@@ -108,19 +108,72 @@ def test_models_summary_grades_each_item(root, capsys):
     assert "\x1b[" not in out
     summary, pool = out.split("\npool:")
     lines = summary.splitlines()
-    assert lines[0].split() == ["config", "a", "b", "g", "d"]
+    assert lines[0].split() == ["config", "a", "b", "g", "d", "cost", "time"]
     ids = {"cheap-low", "near-cheap", "mid-high", "strong-max"}
     rows = {ln.split()[0]: ln.split()[1:] for ln in lines if ln.split() and ln.split()[0] in ids}
     assert rows == {
-        "cheap-low": ["L", "L", "L", "?"],
-        "near-cheap": ["M", "M", "M", "?"],
-        "mid-high": ["H", "H", "H", "?"],
-        "strong-max": ["H", "H", "H", "?"],
+        # grades, then the all-`none` totals: sum of every item's cost / time.
+        "cheap-low": ["L", "L", "L", "?", "10.5000", "210.0"],
+        "near-cheap": ["M", "M", "M", "?", "12.6000", "252.0"],
+        "mid-high": ["H", "H", "H", "?", "21.0000", "420.0"],
+        "strong-max": ["H", "H", "H", "?", "105.0000", "2100.0"],
     }
     assert "items: a=alpha, b=beta, g=gamma, d=delta" in out
     assert "H/M/L = clears the high/mid/low level, - = below low, ? = no value" in out
+    assert (
+        "cost/time = sum over every item (the basis of an all-none request);"
+        " per-item values: models --costs"
+    ) in out
     assert "pool: 4 of 4 configs in the catalog are enabled (pool.yaml)." in out
     assert "cheap-low" in pool and "codex" in pool
+
+
+def test_models_summary_cost_and_time_are_the_route_all_none_totals(root, capsys):
+    # The two columns must be the same all-`none` numbers `route` prices with, not a
+    # separate sum: check them against the `--explain` ranking for an all-`none` request.
+    assert main(["models"]) == 0
+    out = capsys.readouterr().out
+    summary = out.split("\npool:")[0]
+    printed = {
+        ln.split()[0]: (ln.split()[-2], ln.split()[-1])
+        for ln in summary.splitlines()
+        if ln.split() and ln.split()[0] in {"cheap-low", "near-cheap", "mid-high", "strong-max"}
+    }
+    assert main(["route", "--levels", "alpha=none", "--no-log", "--explain", "t"]) == 0
+    explained = json.loads(capsys.readouterr().out)
+    assert explained["cost_basis"] == "all_items"
+    for row in explained["ranking"]:
+        cost, time_s = printed[row["config"]]
+        assert float(cost) == pytest.approx(row["cost"], abs=1e-4)
+        assert float(time_s) == pytest.approx(row["time_per_task_s"], abs=1e-1)
+
+
+def test_models_summary_marks_a_missing_item_as_question_mark(root, capsys):
+    # A config that omits one item has no comparable all-`none` total, so both columns show `?`
+    # rather than a partial sum (the same exclusion `route` makes).
+    (root / "models" / "partial.yaml").write_text(
+        textwrap.dedent(
+            """
+            id: partial
+            model: Partial
+            effort: low
+            snapshot: 2026-09-23
+            items:
+              alpha: {score: 0.30, cost_per_task: 1.0, time_per_task_s: 20.0}
+              beta: {score: 0.30, cost_per_task: 2.0, time_per_task_s: 40.0}
+              gamma: {level: L, cost_per_task: 5.0, time_per_task_s: 100.0}
+            """
+        ),
+        encoding="utf-8",
+    )
+    from conftest import sync_pool
+
+    sync_pool(root)
+    assert main(["models"]) == 0
+    out = capsys.readouterr().out
+    summary = out.split("\npool:")[0]
+    row = [ln for ln in summary.splitlines() if ln.startswith("partial ")][0].split()
+    assert row == ["partial", "L", "L", "L", "?", "?", "?"]
 
 
 def test_models_detail_and_costs_cannot_be_combined(root, capsys):
@@ -222,7 +275,7 @@ def test_models_score_table_with_a_23_char_id_fits_an_80_column_terminal(long_ro
     summary = capsys.readouterr().out.split("\npool:")[0]
     rows = [ln for ln in summary.splitlines() if ln.startswith(LONG_ID)]
     assert len(rows) == 1, f"{LONG_ID} split across lines: {rows!r}"
-    assert rows[0].split() == [LONG_ID, *["H"] * 9]
+    assert rows[0].split() == [LONG_ID, *["H"] * 9, "1.1106", "110.7"]
     _assert_fits_terminal(summary)
 
 
