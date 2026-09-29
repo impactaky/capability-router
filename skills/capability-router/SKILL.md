@@ -76,7 +76,7 @@ The JSON includes `chosen`, `service`, input `levels`, applied `required` levels
 - Cost and time are required per item, so the only miss is a config that omits an item: it has no comparable cost for a request that needs that item, or for an all-`none` request, which sums every item. `cheap` and `balanced` exclude such a config, and a missing time likewise excludes it from `fast-balanced` trade-ups. Warnings name affected configs.
 - `fallback: true`: No config met the original levels, so the router relaxed them. `relaxations` shows the changes; some original requirements may remain unmet.
 
-Changing catalog membership does not alter an existing config's item value. Use `capability-router models --costs` for item costs and times, `capability-router models` for the H/M/L summary and service assignments, or `capability-router models --detail` for the numeric scores and thresholds.
+Changing catalog membership does not alter an existing config's item value. Use `capability-router models --costs` for the per-item costs and times, `capability-router models` for the H/M/L summary, each config's all-`none` `cost`/`time` totals, and service assignments, or `capability-router models --detail` for the numeric scores and thresholds.
 
 ## How do I log a delegation?
 
