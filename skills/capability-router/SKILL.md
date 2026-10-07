@@ -46,9 +46,9 @@ Accept one or more tasks, but **call the CLI once per task**. One call cannot ro
 
 Show only non-`none` items in the result table. If the user corrects a level, rerun only that row with revised `--levels`.
 
-## When should I skip the router?
+## What about prose deliverables?
 
-When the deliverable is mostly polished prose and the user's items do not cover that judgment, the caller picks a writing config directly from its catalog and pool. Use the router normally when the deliverable is research, verification, or a change you can check, such as checking the evidence behind a proposal or finding technical errors in a manuscript.
+The router does not measure prose quality. When the deliverable is finished prose and no item measures that judgment, do not pick a writing config by hand. Instead the definition's owner declares the judgment as a hand-written level item: each config carries `H`, `M`, `L` or `-` for it, and a config with `-` satisfies only `none`. The caller then requests that item at `low` or above, which drops every config without a value, and the other items still decide the effort. Use the router normally when the deliverable is research, verification, or a change you can check, such as checking the evidence behind a proposal or finding technical errors in a manuscript.
 
 ## How do I choose a mode?
 
