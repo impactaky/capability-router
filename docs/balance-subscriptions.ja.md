@@ -1,0 +1,30 @@
+# サブスクリプションの使用量を均す
+
+Codex、Claude Code、Cursor (Pro)、Command Code のうち、`route` で枠の余りが最も大きいサービスを優先します（[理由](how-it-works.ja.md#service-first)）。
+
+## 前提
+
+- 使うサービスに config を割り当てた `pool.yaml`（[config を登録する](register-configs.ja.md)）
+- `codex`、`claude` の使用量：`codexbar` を入れ、各 CLI で OAuth ログインします。
+- `cursor` の使用量：`cursor-agent` にログインします。
+- `commandcode` の使用量：`COMMAND_CODE_API_KEY` を設定します。
+
+## 手順
+
+1. 次のコマンドで、サービスごとに取得できる使用量を確かめます。
+   ```sh
+   capability-router usage
+   ```
+   サービスごとに枠の残り%、または `unavailable`/`error` と理由が出ます。使用量を取得できないサービスは、基準ペースどおりとして扱います。
+2. 次のコマンドで、使用量を取得してタスクを割り当てます。サービスの順位を確認します。
+   ```sh
+   capability-router route --no-log --explain --levels "$LEVELS" "task text"
+   ```
+   `services` に各サービスの `tier` と `surplus`、`selection.service.chosen` に選ばれたサービスが出ます。
+
+## 優先度を調整する
+
+1. 次のコマンドは、`services.yaml` で `cursor` の余りに 20 点を足す例です。足したら手順 2 をやり直します。
+   ```sh
+   echo '{services: {cursor: {offset: 20}}}' > "${XDG_CONFIG_HOME:-$HOME/.config}/capability-router/services.yaml"
+   ```
