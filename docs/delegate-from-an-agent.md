@@ -1,5 +1,7 @@
 # Have an agent select a config and delegate
 
+[日本語](delegate-from-an-agent.ja.md)
+
 Have an LLM agent select and launch a config and service for each delegation ([why the agent estimates requirements](how-it-works.md#caller-estimates)).
 
 ## Prerequisites

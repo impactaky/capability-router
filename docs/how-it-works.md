@@ -1,5 +1,7 @@
 # How it works
 
+[日本語](how-it-works.ja.md)
+
 capability-router serves these purposes.
 
 - LLM agents and users can choose a model and reasoning effort pair (config) for a task using their own criteria.

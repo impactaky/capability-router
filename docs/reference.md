@@ -1,5 +1,7 @@
 # Reference
 
+[日本語](reference.ja.md)
+
 ## Commands
 
 `capability-router` provides these subcommands.

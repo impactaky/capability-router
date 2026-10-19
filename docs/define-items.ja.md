@@ -1,5 +1,7 @@
 # 能力項目を定義する
 
+[English](define-items.md)
+
 タスクの要求を見積もり、config の能力を測るための項目を `capabilities.yaml` に書きます。[項目を定義する理由](how-it-works.ja.md#items)と[インストール手順](start.ja.md)も参照してください。
 
 ## 手順

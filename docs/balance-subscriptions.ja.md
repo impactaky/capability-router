@@ -1,5 +1,7 @@
 # サブスクリプションの使用量をならす
 
+[English](balance-subscriptions.md)
+
 `route` は、Codex、Claude Code、Cursor (Pro)、Command Code の中で枠の余りが最も大きいサービスを優先します。[余りでサービスを選ぶ理由](how-it-works.ja.md#service-first)も参照してください。
 
 ## 前提

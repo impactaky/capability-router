@@ -1,5 +1,7 @@
 # Install and route your first task
 
+[日本語](start.ja.md)
+
 Run capability-router and route your first task using the fictional examples shipped with it ([why real definitions are not included](how-it-works.md#items)).
 
 ## Prerequisites

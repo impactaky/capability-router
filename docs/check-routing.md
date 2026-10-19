@@ -1,5 +1,7 @@
 # Check routing
 
+[日本語](check-routing.ja.md)
+
 Use your definition, catalog and `pool.yaml` ([register configs](register-configs.md)) to see which configs receive which tasks, and why.
 
 ## Steps

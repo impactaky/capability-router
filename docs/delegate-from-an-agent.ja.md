@@ -1,5 +1,7 @@
 # エージェントに config を選ばせて委任する
 
+[English](delegate-from-an-agent.md)
+
 LLM エージェントに、委任ごとに config とサービスを選んで起動してもらいます。[エージェントが要求を見積もる理由](how-it-works.ja.md#caller-estimates)も参照してください。
 
 ## 前提
