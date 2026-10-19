@@ -1,5 +1,7 @@
 # Record delegation outcomes
 
+[日本語](log-delegations.ja.md)
+
 Record the config, service and outcome of each delegation for later review.
 
 ## Prerequisites

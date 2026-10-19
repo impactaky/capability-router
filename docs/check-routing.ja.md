@@ -1,5 +1,7 @@
 # 割り当てを確かめる
 
+[English](check-routing.md)
+
 自分の定義・カタログ・`pool.yaml` を使い、タスクにどの config が選ばれるかを確かめます。選択の理由も確認します。設定の準備は[config を登録する](register-configs.ja.md)を参照してください。
 
 ## 手順

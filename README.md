@@ -1,5 +1,7 @@
 # capability-router
 
+[日本語](README.ja.md)
+
 - LLM agents and users can choose a model and reasoning effort pair (config) for each task using their own criteria.
 - People with several flat-rate AI subscriptions can delegate work to the subscription with more allowance to spare.
 - Unlike prompt routers such as RouteLLM and OpenRouter Auto, selection uses user-defined capability items, without a trained classifier. It returns IDs without calling a model.

@@ -1,5 +1,7 @@
 # config を登録する
 
+[English](register-configs.md)
+
 config はモデルと推論の強さの組です。config ごとにカタログファイルを作ります。実行先のサービスは `pool.yaml` に書きます。
 
 ## 前提

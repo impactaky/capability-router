@@ -1,5 +1,7 @@
 # リファレンス
 
+[English](reference.md)
+
 ## コマンド
 
 `capability-router` のサブコマンドは次のとおりです。

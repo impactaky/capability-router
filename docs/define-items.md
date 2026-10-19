@@ -1,5 +1,7 @@
 # Define capability items
 
+[日本語](define-items.ja.md)
+
 Write items in `capabilities.yaml` to estimate task requirements and measure config capabilities ([why](how-it-works.md#items), [installation](start.md)).
 
 ## Steps

@@ -1,5 +1,7 @@
 # 仕組み
 
+[English](how-it-works.md)
+
 capability-router の目的は次のとおりです。
 
 - LLM エージェントや利用者が、自分の基準でタスクを任せるモデルと推論の強さの組（config）を選べます。

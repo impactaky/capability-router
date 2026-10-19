@@ -1,5 +1,7 @@
 # 委任の結果を記録する
 
+[English](log-delegations.md)
+
 委任ごとの config・サービス・結果を記録し、後で見直します。
 
 ## 前提

@@ -1,5 +1,7 @@
 # Register configs
 
+[日本語](register-configs.ja.md)
+
 Write a catalog file for each config (a model and reasoning effort pair), and list its services in `pool.yaml`.
 
 ## Prerequisites

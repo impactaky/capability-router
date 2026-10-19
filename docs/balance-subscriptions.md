@@ -1,5 +1,7 @@
 # Balance subscription usage
 
+[日本語](balance-subscriptions.ja.md)
+
 Have `route` prefer the service with the most surplus among Codex, Claude Code, Cursor (Pro) and Command Code ([why](how-it-works.md#service-first)).
 
 ## Prerequisites
