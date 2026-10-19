@@ -59,7 +59,8 @@
 - `relaxations`：下げた項目、変更前後の段、緩和の各段階で落ちた config です。
 - `selection`：`cheapest_passing`、`chosen`、`score_delta`、`budget`、`traded_up`、`service`（`chosen`、`tier`、`surplus`、`tied_services`）です。
 - `services`：サービスごとの `status`、`tier`（`normal`/`low_5h`/`exhausted`）、`surplus`、`base`、`offset`、`ticket`、枠です。
-- `cost_basis`、`cost_items_requested`：`requested_items`、または全項目の段が `none` なら `all_items` です。
+- `cost_basis`：`requested_items`、または全項目の段が `none` なら `all_items` です。
+- `cost_items_requested`：段が `none` 以外の項目名のリストです。
 - `usage_source`、`usage_fetched_at`：`cache`、`fetched`、`file`、`none` のいずれかと、取得時刻です。
 - `task_tokens_estimate`、`warnings`、`log_id`：推定入力長、警告、ログ ID です。
 

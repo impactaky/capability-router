@@ -59,7 +59,8 @@ The table uses these terms.
 - `relaxations`: Items lowered, levels before and after, and configs rejected at each relaxation step.
 - `selection`: `cheapest_passing`, `chosen`, `score_delta`, `budget`, `traded_up`, and `service` (`chosen`, `tier`, `surplus`, `tied_services`).
 - `services`: Each service's `status`, `tier` (`normal`/`low_5h`/`exhausted`), `surplus`, `base`, `offset`, `ticket`, and allowance windows.
-- `cost_basis`, `cost_items_requested`: `requested_items`, or `all_items` when every item's level is `none`.
+- `cost_basis`: `requested_items`, or `all_items` when every item's level is `none`.
+- `cost_items_requested`: A list of item names whose requested level is other than `none`.
 - `usage_source`, `usage_fetched_at`: One of `cache`, `fetched`, `file`, `none`, and the retrieval timestamp.
 - `task_tokens_estimate`, `warnings`, `log_id`: Estimated input length, warnings and log ID.
 
