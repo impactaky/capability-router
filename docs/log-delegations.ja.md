@@ -4,19 +4,19 @@
 
 ## 前提
 
-- `route` を実行できる設定（[エージェントに config を選ばせて委任する](delegate-from-an-agent.ja.md)）
+- `route` を実行できるように設定します。手順は[エージェントに config を選ばせて委任する](delegate-from-an-agent.ja.md)を参照してください。
 
 ## 手順
 
-1. 次のコマンドで、ラベルを付けてタスクを割り当て、ログ ID も受け取ります（`-` なら記録されていません）。
+1. 次のコマンドで、タスクにラベルを付けて割り当てます。結果にはログ ID も含まれます。ID が `-` なら記録されていません。
    ```sh
    read config service log_id < <(capability-router route --levels "$LEVELS" --label "retry handling" --print-log-id "task text")
    ```
-2. 委任が終わったら、次のコマンドで受け取ったログ ID に結果を記録します。
+2. 委任した作業が終わったら、次のコマンドで結果を記録します。割り当て時に受け取ったログ ID を指定します。
    ```sh
    capability-router log outcome "$log_id" --status pass --rounds 1 --implementer "codex:exec" --note "needed one fix"
    ```
-3. 次のコマンドで、直近 7 日の記録を集計して確かめます。
+3. 次のコマンドで、直近 7 日間の記録を集計して確認します。
    ```sh
    capability-router log --since 7d
    ```

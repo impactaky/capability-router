@@ -1,15 +1,15 @@
 # config を登録する
 
-config（モデルと推論の強さの組）ごとにカタログファイルを書き、実行先のサービスを `pool.yaml` に書きます。
+config はモデルと推論の強さの組です。config ごとにカタログファイルを作ります。実行先のサービスは `pool.yaml` に書きます。
 
 ## 前提
 
-- 自分の `capabilities.yaml`（[能力項目を定義する](define-items.ja.md)）
-- 各モデルにアンカー問題を解かせる手段
+- 自分の `capabilities.yaml` を用意します。作り方は[能力項目を定義する](define-items.ja.md)を参照してください。
+- 各モデルにアンカー問題を解かせる手段を用意します。
 
 ## 手順
 
-1. 次のコマンドは、config `big-high` のカタログファイルと、実行先を書いた `pool.yaml` を作る例です（項目の値は[項目の値を決める](#values)に従って決めます）。
+1. 次のコマンドは、config `big-high` のカタログファイルと、実行先を指定する `pool.yaml` を作る例です。項目の値は[値の決め方](#values)に従って記入します。
    ```sh
    m="${XDG_STATE_HOME:-$HOME/.local/state}/capability-router/models"; mkdir -p "$m"
    echo '{id: big-high, model: Big Model, effort: high, items: {sql: {level: H, cost_per_task: 3, time_per_task_s: 60}}}' > "$m/big-high.yaml"
@@ -19,11 +19,11 @@ config（モデルと推論の強さの組）ごとにカタログファイル�
    ```sh
    capability-router models
    ```
-   有効な config ごとに、項目の `H`/`M`/`L`/`-`、費用と時間の合計、サービスが 1 行で出ます。
+   有効な config ごとに 1 行ずつ表示されます。各行には項目の段を表す `H`/`M`/`L`/`-`、費用と時間の合計、サービスが並びます。
 
 <a id="values"></a>
 ## 項目の値を決める
 
-- 段ごとのアンカー問題の正答率がある：`level: H`/`M`/`L`/`'-'` を書きます。`python examples/levels_from_anchors.py anchor-results.yaml --pass-rate 0.5` で `level` 行を出力します。
-- 項目ごとの 0..1 の数（問題集やベンチマークの正答率）がある：`score: 0.62` と、`capabilities.yaml` の該当項目の `thresholds` を書きます。`python examples/thresholds.py <カタログ> <capabilities.yaml> --tasks sql=10` で仮の `thresholds` を出力します。
-- 費用や時間をまだ測っていない：全 config に同じ `cost_per_task`・`time_per_task_s` を書きます。
+- 各段のアンカー問題の正答率が分かる場合：`level: H`/`M`/`L`/`'-'` を書きます。`python examples/levels_from_anchors.py anchor-results.yaml --pass-rate 0.5` を実行すると、`level` の行が出ます。
+- 問題集やベンチマークの正答率が、項目ごとに 0..1 の数で分かる場合：`score: 0.62` のように書きます。`capabilities.yaml` の該当項目には `thresholds` が必要です。`python examples/thresholds.py <カタログ> <capabilities.yaml> --tasks sql=10` を実行すると、仮の `thresholds` が出ます。
+- 費用や時間をまだ測っていない場合：全 config に同じ `cost_per_task`・`time_per_task_s` を書きます。
